@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Skyttus.Core\Skyttus.Core.Entity\Skyttus.Core.Entity.csproj" />
+    <ProjectReference Include="..\..\Skyttus.Core\Skyttus.Core.Service\Skyttus.Core.Service.csproj" />
+    <ProjectReference Include="..\..\TimeTable.Services\TimeTable.Infra\TimeTable.Infra.csproj" />
+    <ProjectReference Include="..\..\TimeTable.Services\TimeTable.Service\TimeTable.Service.csproj" />
+  </ItemGroup>
+
+</Project>
