@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TimeTable.Entity.Manage;
-//using TimeTable.Models.Models;
 
 namespace TimeTable.Services.Services.Interfaces
 {
-    public interface ITimeTableService //: IBaseService<TimeTableDetail, Entity.Manage.TimeTableDetail>
+    public interface ITimeTableService
     {
-        Task<TimeTableDetail> AddTime(TimeTableDetail model);
         Task<TimeTableDetail> AddTimeTable(TimeTableDetail timeTableEntity);
+        Task<TimeTableDetail> GetTimeTable(Guid timeTableId);
     }
 }

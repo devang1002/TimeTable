@@ -8,7 +8,7 @@ using TimeTable.Models.Models;
 
 namespace TimeTable.Services.Services.Interfaces
 {
-    public interface ISubjectService //: IBaseService <Entity.Manage.Subject, Entity.Manage.Subject>
+    public interface ISubjectService 
     {
     }
 }

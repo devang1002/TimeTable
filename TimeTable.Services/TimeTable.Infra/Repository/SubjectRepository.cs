@@ -10,10 +10,10 @@ using TimeTable.Infra.Repository.Interfaces;
 
 namespace TimeTables.Infra.Repository
 {
-    public class SubjectRepository : ISubjectRepository//GenericRepository<Subject>, ISubjectRepository
+    public class SubjectRepository : ISubjectRepository
     {
         private readonly TimeTableContext _timeTableContext;
-        public SubjectRepository(TimeTableContext timeTableContext) //: base(timeTableContext)
+        public SubjectRepository(TimeTableContext timeTableContext) 
         => (_timeTableContext) = (timeTableContext);
     }
 }

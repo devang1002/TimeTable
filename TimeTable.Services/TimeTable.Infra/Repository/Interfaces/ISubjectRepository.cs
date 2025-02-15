@@ -8,7 +8,7 @@ using TimeTable.Entity.Manage;
 
 namespace TimeTable.Infra.Repository.Interfaces
 {
-    public interface ISubjectRepository //: IGenericRepository<Subject>
+    public interface ISubjectRepository 
     {
     }
 }

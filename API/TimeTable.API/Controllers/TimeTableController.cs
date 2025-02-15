@@ -1,29 +1,21 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TimeTable.API.Controllers.Common;
 using TimeTable.Entity.Manage;
-
-//using TimeTable.Models.Models;
 using TimeTable.Services.Services.Interfaces;
 
 namespace TimeTable.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TimeTableController : ControllerBase//CrudController<TimeTableDetail, Entity.Manage.TimeTableDetail>
+    public class TimeTableController : ControllerBase
     {
         private readonly ITimeTableService _timeTableService;
-        public TimeTableController(ILogger<TimeTableController> logger, ITimeTableService timeTableService) //: base(logger, timeTableService)
+        public TimeTableController(ILogger<TimeTableController> logger, ITimeTableService timeTableService) 
         => (_timeTableService) = (timeTableService);
 
-        [HttpPost("AddTime")]
-        public async Task<ActionResult> AddTime(TimeTableDetail model)
-        {
-            var result = await _timeTableService.AddTime(model);
-            return Ok(result);
-        }
-
-        [HttpPost("generate")] // Endpoint to generate timetable
+        [HttpPost("generate")] 
         public async Task<IActionResult> GenerateTimeTable([FromBody] TimeTableDetail request)
         {
             int totalHoursForWeek = request.NoOfWorkingDays * request.NoOfSubjectsPerDay;
@@ -33,7 +25,6 @@ namespace TimeTable.API.Controllers
             {
                 return BadRequest("Total subject hours must be equal to the total hours for the week.");
             }
-            var timetable = GenerateTimetable(request);
 
             var timeTableEntity = new TimeTableDetail
             {
@@ -44,19 +35,28 @@ namespace TimeTable.API.Controllers
                 SubjectHours = request.SubjectHours
             };
 
-            var result = await _timeTableService.AddTimeTable(timeTableEntity);
-
-            return Ok(timetable);
+            await _timeTableService.AddTimeTable(timeTableEntity);
+            return Ok(new { message = "Timetable successfully created!"});
         }
 
-
-        private List<List<string>> GenerateTimetable(TimeTableDetail request)
+        [HttpGet("GenerateTimetable")]
+        public async Task<IActionResult> GetTimeTable(Guid timeTableId)
         {
+            var request = await _timeTableService.GetTimeTable(timeTableId);
+
+            if(request == null)
+            {
+                return NotFound("Timetable details not found.");
+            }
             List<List<string>> timetable = new();
             List<string> subjects = new();
 
             foreach (var subject in request.SubjectHours)
             {
+                if (subject == null || string.IsNullOrEmpty(subject.SubjectName))
+                {
+                    continue;
+                }
                 subjects.AddRange(Enumerable.Repeat(subject.SubjectName, subject.TotalHours));
             }
 
@@ -78,11 +78,8 @@ namespace TimeTable.API.Controllers
                 timetable.Add(daySubjects);
             }
 
-            return timetable;
+            return Ok(timetable);
         }
 
     }
-
-
-
 }

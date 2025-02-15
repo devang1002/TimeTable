@@ -8,10 +8,10 @@ namespace TimeTable.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SubjectController : ControllerBase//CrudController<Entity.Manage.Subject, Entity.Manage.Subject>
+    public class SubjectController : ControllerBase
     {
         private readonly ISubjectService _subjectService;
-        public SubjectController(ISubjectService subjectService, ILogger<SubjectController> logger) //: base(logger, subjectService)
+        public SubjectController(ISubjectService subjectService, ILogger<SubjectController> logger) 
         => (_subjectService) = (subjectService);
     }
 }

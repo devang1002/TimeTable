@@ -1,4 +1,5 @@
-﻿using Skyttus.Core.Infra.Repository;
+﻿using Microsoft.EntityFrameworkCore;
+using Skyttus.Core.Infra.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,18 +11,11 @@ using TimeTable.Infra.Repository.Interfaces;
 
 namespace TimeTables.Infra.Repository
 {
-    public class TimeTableRepository :ITimeTableRepository//: GenericRepository<TimeTableDetail>, ITimeTableRepository
+    public class TimeTableRepository : ITimeTableRepository
     {
         private readonly TimeTableContext _timeTablesContext;
-        public TimeTableRepository(TimeTableContext timeTablesContext) //: base(timeTablesContext)
+        public TimeTableRepository(TimeTableContext timeTablesContext)
         => (_timeTablesContext) = (timeTablesContext);
-
-        public async Task<TimeTableDetail> AddTime(TimeTableDetail model)
-        {
-            var result = _timeTablesContext.TimeTable.Add(model);
-            await _timeTablesContext.SaveChangesAsync();
-            return result.Entity;
-        }
 
         public async Task<TimeTableDetail> AddTimeTable(TimeTableDetail timeTable)
         {
@@ -30,18 +24,13 @@ namespace TimeTables.Infra.Repository
                 subject.TimeTableId = timeTable.Id;
             }
             _timeTablesContext.TimeTable.Add(timeTable);
-            try
-            {
-                await _timeTablesContext.SaveChangesAsync();
-                
-
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            await _timeTablesContext.SaveChangesAsync();
             return timeTable;
+        }
+
+        public async Task<TimeTableDetail> GetTimeTable(Guid timeTableId)
+        {
+            return await _timeTablesContext.TimeTable.Include(x => x.SubjectHours).AsNoTracking().FirstOrDefaultAsync(x => x.Id == timeTableId);
         }
     }
 }

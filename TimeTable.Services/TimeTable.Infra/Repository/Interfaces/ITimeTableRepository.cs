@@ -8,9 +8,9 @@ using TimeTable.Entity.Manage;
 
 namespace TimeTable.Infra.Repository.Interfaces
 {
-    public interface ITimeTableRepository //: IGenericRepository<TimeTableDetail>
+    public interface ITimeTableRepository
     {
-        Task<TimeTableDetail> AddTime(TimeTableDetail model);
         Task<TimeTableDetail> AddTimeTable(TimeTableDetail timeTable);
+        Task<TimeTableDetail> GetTimeTable(Guid timeTableId);
     }
 }

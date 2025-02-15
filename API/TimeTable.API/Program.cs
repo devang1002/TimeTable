@@ -21,14 +21,14 @@ builder.Services.TimeTableInfraService();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-//builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    options.JsonSerializerOptions.WriteIndented = false; // Ensures clean output
+    options.JsonSerializerOptions.PropertyNamingPolicy = null; // Prevents automatic property renaming
+});
 
 
-// Add services to the container
-//builder.Services.AddDbContext<TimeTableContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("TimeTableConnectionStrings")));
-
-//var app = builder.Build();
 
 
 builder.Services.AddMemoryCache();

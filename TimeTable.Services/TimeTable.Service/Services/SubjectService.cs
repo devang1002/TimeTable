@@ -11,11 +11,11 @@ using TimeTable.Services.Services.Interfaces;
 
 namespace TimeTable.Services.Services
 {
-    public class SubjectService : ISubjectService//BaseService<Entity.Manage.Subject, Entity.Manage.Subject>, ISubjectService
+    public class SubjectService : ISubjectService
     {
         private readonly ISubjectRepository _subjectRepository;
         private readonly IMapper _mapper;
-        public SubjectService(ISubjectRepository subjectRepository, IMapper mapper) //: base(subjectRepository, mapper)
+        public SubjectService(ISubjectRepository subjectRepository, IMapper mapper)
         => (_subjectRepository, _mapper) = (subjectRepository, mapper);
 
     }
